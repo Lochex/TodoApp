@@ -1,0 +1,29 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "A todo app for manging tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lochex/TodoApp.git"
+  },
+  "author": "Elo Okonkwo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lochex/TodoApp/issues"
+  },
+  "homepage": "https://github.com/Lochex/TodoApp#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.4",
+    "morgan": "^1.8.2",
+    "path": "^0.12.7",
+    "webpack": "^3.4.0",
+    "webpack-dev-server": "^2.6.1"
+  }
+}

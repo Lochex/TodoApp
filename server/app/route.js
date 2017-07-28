@@ -1,6 +1,9 @@
 const express = require('express');
+const controllers = require('./controllers'); 
+const auth = require('./middleware/auth');
 
-const TodoController = require('./controllers/todo');
+const TodoController = controllers.Todo;
+const UserController = controllers.User;
 
 
 module.exports.initRoutes = (router) => {
@@ -8,19 +11,30 @@ module.exports.initRoutes = (router) => {
     console.log("I'm working");
     res.json({message: 'I worked!'});
   });
-  // TodoItem
-  router.post('/todoitem', TodoController.createTodoItem);
-  router.get('/todoitem/:todo_id', TodoController.getTodoItem);
-  router.get('/todoitems', TodoController.getAllTodoItems);
-  router.put('/todoitem/:todo_id', TodoController.updateTodoItem);
-  router.delete('/todoitem/:todo_id', TodoController.deleteTodoItem);
+
+  // User
+  router.post('/user', UserController.createUser);
+
+  router.post('/user/login', UserController.login);
+  
+  // Todo: add authentication middleware here 
+
+  //router.put('/user', UserController.updateUser);
+  //TodoItem
+  router.get('/todoitem/:todo_id', auth.verifyToken, TodoController.getTodoItem);
+  router.put('/todoitem/:todo_id', auth.verifyToken, TodoController.updateTodoItem);
+  router.delete('/todoitem/:todo_id', auth.verifyToken, TodoController.deleteTodoItem);
+  router.get('/todoitems', auth.verifyToken, TodoController.getAllTodoItems);
+  router.post('/todoitem', auth.verifyToken, TodoController.createTodoItem);
 
   // TodoTasks
-  router.post('/todoitem/:todo_id/todotask', TodoController.createTodoTask);
-  router.get('/todoitem/:todo_id/todotasks', TodoController.getAllTodoTasks);
-  router.get('/todotask/:task_id', TodoController.getTodoTask);
-  router.put('/todotask/:task_id', TodoController.updateTodoTask);
-  router.delete('/todotask/:task:id', TodoController.deleteTodoTask);
+  router.post('/todoitem/:todo_id/todotask', auth.verifyToken, TodoController.createTodoTask);
+  router.get('/todoitem/:todo_id/todotasks', auth.verifyToken, TodoController.getAllTodoTasks);
+  router.delete('/todotask/:task:id', auth.verifyToken, TodoController.deleteTodoTask);
+  router.get('/todotask/:task_id', auth.verifyToken, TodoController.getTodoTask);
+  router.put('/todotask/:task_id', auth.verifyToken, TodoController.updateTodoTask);
+
+  
 
   return router;
 }

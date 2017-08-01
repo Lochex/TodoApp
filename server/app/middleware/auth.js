@@ -1,5 +1,5 @@
-const config = require('../../../config');
-const jwt = require('jsonwebtoken')
+const config = require('../../../config/config');
+const jwt = require('jsonwebtoken');
 
 module.exports.verifyToken = (req, res, next) => {
   // check header or url parameters or post parameters for token
@@ -9,7 +9,7 @@ module.exports.verifyToken = (req, res, next) => {
   if (token) {
 
     // verifies secret and checks exp
-    jwt.verify(token, config.secret, function(err, decoded) {      
+    jwt.verify(token, process.env.SECRET, function(err, decoded) {      
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {

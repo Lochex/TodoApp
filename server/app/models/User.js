@@ -9,4 +9,4 @@ var UserSchema = new Schema({
   status: { type: String, default: 'active' }
 });
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema);

@@ -5,7 +5,9 @@ const Schema       = mongoose.Schema;
 
 var TodoItemSchema   = new Schema({
     title: String,
-    // owner: String
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+    owner: {type: Schema.ObjectId, ref: 'TodoItem', required: true}
 
 });
 

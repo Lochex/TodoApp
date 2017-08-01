@@ -30,7 +30,7 @@ module.exports.initRoutes = (router) => {
   // TodoTasks
   router.post('/todoitem/:todo_id/todotask', auth.verifyToken, TodoController.createTodoTask);
   router.get('/todoitem/:todo_id/todotasks', auth.verifyToken, TodoController.getAllTodoTasks);
-  router.delete('/todotask/:task:id', auth.verifyToken, TodoController.deleteTodoTask);
+  router.delete('/todotask/:task_id', auth.verifyToken, TodoController.deleteTodoTask);
   router.get('/todotask/:task_id', auth.verifyToken, TodoController.getTodoTask);
   router.put('/todotask/:task_id', auth.verifyToken, TodoController.updateTodoTask);
 

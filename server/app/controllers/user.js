@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const jwt =  require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 const User = require('../models/User');
 const validator = require('../utilities/validator');
 const encrypt = require('../utilities/encrypt').encrypt;
 const dencrypt = require('../utilities/encrypt').dencrypt;
-const config = require('../../../config');
+const config = require('../../../config/config');
 
 global.Promise = mongoose.Promise;
 
@@ -35,20 +36,18 @@ module.exports = {
             name: newUser.name,
             email: newUser.email
           }
-          const token = jwt.sign(JWTPayload, config.secret, {
-          expiresInMinutes: 1440 // expires in 24 hours
-        });
+          const token = jwt.sign(JWTPayload, process.env.SECRET, {
+          expiresIn: 60*60*24
+          });
 
           // create response payload
           const response = {
-            tasks: mongoseTasks,
             user: JWTPayload,
             jwt: token
           };
-          res.status(201).send(response)
+          res.status(201).send({ message: 'User created'});
         })
         .catch(error => {
-          console.log('error occurrred oh', error);
           res.status(400).send(error)
         });
     } else {
@@ -71,7 +70,7 @@ module.exports = {
         const isPassowrd = dencrypt(userData.password, foundUser.password);
         if(!isPassowrd) {
           return res.status(401).json({
-            message: 'Wrong email or password'
+            message: 'Wrong password'
           });
         }
         // create JWt
@@ -80,7 +79,7 @@ module.exports = {
           name: foundUser.name,
           email: foundUser.email
         }
-        const token = jwt.sign(JWTPayload, 'EloisGreat');
+        const token = jwt.sign(JWTPayload, process.env.SECRET);
         // create response payload
         const response = {
           user: JWTPayload,

@@ -2,13 +2,15 @@ const webpack = require('webpack');
 const path = require('path');
 const env = require('dotenv').config();
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const jwtDecode = require('jwt-decode');
+//const jwtDecode = require('jwt-decode');
 
+const outputPath = path.join(__dirname, 'public')
+const BUILD_DIR = path.resolve(__dirname, 'public');
 const config = {
-  entry: './client/app/src/components/App.jsx',
+  entry: './client/app/src/App.jsx',
   output: {
+    path: BUILD_DIR,
     filename: 'bundle.js',
-    path: `${__dirname}/client/app/public`
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json']
@@ -17,7 +19,6 @@ const config = {
     historyApiFallback: true,
   },
   module: {
-
     rules: [
       {
         test: /\.js|.jsx?$/,
@@ -57,10 +58,11 @@ const config = {
     new webpack.DefinePlugin({
       'process': {
         'env': {
-          'JWT_SECRET': JSON.stringify(process.env.JWT_SECRET),
+          'JWT_SECRET': JSON.stringify(process.env.SECRET),
         }
       }
     })
   ]
 };
+
 module.exports = config;

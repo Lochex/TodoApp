@@ -29,7 +29,7 @@ class Signup extends Component {
     event.preventDefault();
     this.props.userSignup(this.state).then((error) => {
       if(!error) {
-        browserHistory.push('/dashboard');
+        browserHistory.push('/login');
       }
       else {
         this.setState({ error: error.response.data.message });

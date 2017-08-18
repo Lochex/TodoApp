@@ -7,6 +7,7 @@
     "test": "NODE_ENV=test PORT=3333 nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register tests/*.spec.js --timeout 10000",
     "build": "webpack -w",
     "dev": "babel-node server/app.js",
+    "start": "node server/app.js",
     "watch": "webpack -d --watch",
     "serve": "nodemon server/app.js"
   },

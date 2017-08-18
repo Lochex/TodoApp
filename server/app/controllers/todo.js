@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const winston = require('winston');
 const Todo = require('../models/TodoItem');
 const Task = require('../models/TodoTasks');
-
+const User = require('../models/User');
 
 const errorMessage = { message: "Error occured" };
 module.exports = {
@@ -26,11 +26,36 @@ module.exports = {
       .then(todo => res.status(200).send(todo))
       .catch(error => res.status(400).send(errorMessage));
   },
+
   getAllTodoItems(req, res) {
     return Todo.find().where('owner').equals(req.decoded._id)
       .then(todos => res.status(200).send(todos))
       .catch(error => res.status(400).send(error));
   },
+
+  getUserTodoItems(req, res) {
+    const id = req.decoded._id;
+    // console.log(id, 'ooo');
+    if (req.params.userId !== id) {
+      return res.status(400).send({ message: 'Unauthorized access'});
+    }
+    return Todo.find({ owner: id})
+      .then(todo => res.status(200).send(todo))
+      .catch(error => res.status(400).send(errorMessage));
+  },
+
+  // getAllTodoItems(req, res) {
+  //   console.log('I am here');
+  //   User.findById(req.decoded._id).then((user) => {
+  //     if (user) {
+  //       console.log(user._id, '------->');
+  //       return Todo.find({}).where('owner', user._id)
+  //       .then(todos => res.status(200).send(todos))
+  //       .catch(error => res.status(400).send(error));
+  //     }
+  //   })
+   
+  // },
   updateTodoItem(req, res) {
     Todo.findById(req.params.todo_id)
       .then((todo) => {
@@ -63,7 +88,11 @@ module.exports = {
 
   createTodoTask(req, res) {
     // const id = mongoose.Types.ObjectId(req.params.todo_id);
-    return Todo.findById(req.params.todo_id)
+    const todoId = req.params.todo_id;
+    console.log('I got here', todoId);
+
+
+    Todo.findById(todoId.toString())
     .then(todo => {
       if(!todo) {
         return res.status(400).json({
@@ -73,26 +102,31 @@ module.exports = {
       return new Task({
         content: req.body.content,
         complete: false,
-        priorityLevel: req.body.priorityLevel,
-        todoItem: req.params.todo_id
+        priorityLevel: 'normal',
+        todoItem: req.params.todo_id,
+        owner: req.decoded._id
       }).save()
-      .then(task => res.status(201).send(task))
-      .catch(error => res.status(400).send({ message: 'Error occured, enter task'}));
-  })
-  .catch(error => res.status(400).send({ message: 'Todo does not exist' }));
+      .then(task => {
+        console.log(task, 'check this');
+        return res.status(201).send(task);
+      })
+      .catch(error => res.status(500).send({ message: 'Server error', error }));
+    })
+    .catch(error => res.status(500).send({ message: 'Server error', error }));
   },
 
   getAllTodoTasks(req, res) {
     return Todo.findById(req.params.todo_id)
       .then(todo => {
-        return Task.find({todoItem: todo.id})
-        .then((task) => {
-          res.status(200).send(task);
+        return Task.find({todoItem: todo.id}).sort({createdAt: -1})
+        .then((tasks) => {
+          res.status(200).send(tasks);
         })
         .catch(error => res.status(400).send(errorMessage));
       })
       .catch(error => res.status(400).send({ message: 'Todo does not exist' }));
   },
+
   getTodoTask(req, res) {
     return Task.findById(req.params.task_id)
       .then((task) => {
@@ -108,8 +142,11 @@ module.exports = {
             message: 'Task not found'
           })
         };
-        task.content = req.body.content;
-        task.priorityLevel = req.body.priorityLevel;
+        console.log(req.body.complete);
+        task.content = req.body.content || task.content;
+        task.priorityLevel = req.body.priorityLevel || task.priorityLevel;
+        task.complete = req.body.complete;
+        task.updatedAt = Date.now();
         task.save().then((task) => res.status(200).send(task))
         .catch(error => res.status(400).send(errorMessage));
       })

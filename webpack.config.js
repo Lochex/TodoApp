@@ -11,13 +11,14 @@ const config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json']
   },
-  devServer: {
-    historyApiFallback: true,
-  },
+  // devServer: {
+  //   historyApiFallback: true,
+  // },
   module: {
     rules: [
       {
@@ -39,7 +40,11 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ['css-loader', 'style-loader', 'resolve-url-loader'],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader'],
+          publicPath: '/public',
+        }),
       },
 
       {
@@ -54,7 +59,12 @@ const config = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('css/style.css'),
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin({
+      filename: 'app.css',
+      disable: false,
+      allChunks: true,
+    }),
     new webpack.DefinePlugin({
       'process': {
         'env': {

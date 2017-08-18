@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import '../app.css';
-import toastr from 'toastr';
 import { connect } from 'react-redux';
-import { userSignupRequest } from '../actions/signupAction';
+import toastr from 'toastr';
+import { loginRequest } from '../actions/loginAction';
 
-class Signup extends Component {
+class Login extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
       password: '',
       email: '',
       error: {}
@@ -19,33 +18,22 @@ class Signup extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onChange(event) {
-    this.setState({
-      [event.target.name] : event.target.value
-    });
+    this.setState({[event.target.name] : event.target.value});
   }
 
-  
   onSubmit(event) {
     event.preventDefault();
-    this.props.userSignup(this.state).then((error) => {
+    this.props.userLogin(this.state).then((error) => {
+      console.log(error)
       if(!error) {
         browserHistory.push('/dashboard');
       }
       else {
         this.setState({ error: error.response.data.message });
-        browserHistory.push('/');
+        browserHistory.push('/login');
         toastr.error(this.state.error);
       }
     }) 
-    //console.log(this.state);
-    // axios.post('/api/v1/user', this.state )
-    // .then(function (response) {
-    //   // redirect user
-    // })
-    // .catch(function (error) {
-    //   // show error message
-    //   console.log(error);
-    // });
   }
 
   render() {
@@ -54,15 +42,9 @@ class Signup extends Component {
 		
         <section className="card wow fadeInLeft">
           
-          <h3 className="wow fadeInDown" data-wow-delay="0.4s">Todoly - Signup</h3>
+          <h3 className="wow fadeInDown" data-wow-delay="0.4s">Todoly - Login</h3>
 
           <form action="#" className="form" method="post" onSubmit={this.onSubmit}>
-              <div className="form__wrapper wow fadeInDown" data-wow-delay="0.5s">
-                  <input type="name" onChange={this.onChange} className="form__input validate" id="name" name="name" required/>
-                  <label className="form__label" htmlFor="name">
-                <span className="form__label-content">Enter Full Name</span>
-              </label>
-              </div>
               <div className="form__wrapper wow fadeInDown" data-wow-delay="0.5s">
                   <input type="email" onChange={this.onChange} className="form__input validate" id="email" name="email" required/>
                   <label className="form__label" htmlFor="email">
@@ -80,11 +62,11 @@ class Signup extends Component {
 
               <div className="form__wrapper--submit wow fadeInLeft" data-wow-delay="0.7s">
                 <div className="form__input-submit">
-                    <button type="submit" name="submit" className="btn btn-block">Sign Up</button>
+                    <button type="submit" name="submit" className="btn btn-block">Login</button>
                   </div>
               </div>
           </form>
-          <div className="text-center text-small wow fadeInLeft" data-wow-delay="0.8s">Already have an account? <Link to='/login'>Log In</Link></div>
+          <div className="text-center text-small wow fadeInLeft" data-wow-delay="0.8s">Dont have an account? <Link to='/'>Sign Up</Link></div>
 
         </section>
 			</section>
@@ -92,14 +74,13 @@ class Signup extends Component {
   }
 }
 
-Signup.propTypes = {
-  userSignup: React.PropTypes.func.isRequired
+Login.propTypes = {
+  userLogin: React.PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userSignup: userDetails => dispatch(userSignupRequest(userDetails))
+    userLogin: userDetails => dispatch(loginRequest(userDetails))
   }
 }
-export default connect(null, mapDispatchToProps) (Signup);
-
+export default connect(null, mapDispatchToProps) (Login);

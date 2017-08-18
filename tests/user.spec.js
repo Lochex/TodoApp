@@ -47,7 +47,6 @@ describe('Users', () => {
             .send(mockCreateUser)
             .end((err, res) => {
               res.should.have.status(201);
-              res.body.should.have.property('message').eql('User created');
               done();
             });
       });
@@ -61,7 +60,7 @@ describe('Users', () => {
             .send(invalidUser)
             .end((err, res) => {
               res.should.have.status(400);
-              res.body.should.have.property('message').eql('Name, email and passsword are compulsory');
+              res.body.should.have.property('message').eql('Enter Surname and Firstname');
               done();
             });
       });

@@ -1,4 +1,3 @@
-const express = require('express');
 const controllers = require('./controllers'); 
 const auth = require('./middleware/auth');
 
@@ -6,12 +5,7 @@ const TodoController = controllers.Todo;
 const UserController = controllers.User;
 
 
-module.exports.initRoutes = (router) => {
-  router.get('/', (req, res) => {
-    console.log("I'm working");
-    res.json({message: 'I worked!'});
-  });
-
+ const routes = (router) => {
   // User
   router.post('/user', UserController.createUser);
 
@@ -24,8 +18,10 @@ module.exports.initRoutes = (router) => {
   router.get('/todoitem/:todo_id', auth.verifyToken, TodoController.getTodoItem);
   router.put('/todoitem/:todo_id', auth.verifyToken, TodoController.updateTodoItem);
   router.delete('/todoitem/:todo_id', auth.verifyToken, TodoController.deleteTodoItem);
+  router.get('/todoitems/:userId', auth.verifyToken, TodoController.getUserTodoItems);
   router.get('/todoitems', auth.verifyToken, TodoController.getAllTodoItems);
   router.post('/todoitem', auth.verifyToken, TodoController.createTodoItem);
+  
 
   // TodoTasks
   router.post('/todoitem/:todo_id/todotask', auth.verifyToken, TodoController.createTodoTask);
@@ -33,8 +29,6 @@ module.exports.initRoutes = (router) => {
   router.delete('/todotask/:task_id', auth.verifyToken, TodoController.deleteTodoTask);
   router.get('/todotask/:task_id', auth.verifyToken, TodoController.getTodoTask);
   router.put('/todotask/:task_id', auth.verifyToken, TodoController.updateTodoTask);
-
-  
-
-  return router;
 }
+
+module.exports = routes;

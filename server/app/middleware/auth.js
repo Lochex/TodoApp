@@ -3,11 +3,10 @@ const jwt = require('jsonwebtoken');
 
 module.exports.verifyToken = (req, res, next) => {
   // check header or url parameters or post parameters for token
-  var token = req.headers['x-access-token'];
+  var token = req.headers['x-access-token'] || req.headers.authorization;
 
   // decode token
   if (token) {
-
     // verifies secret and checks exp
     jwt.verify(token, process.env.SECRET, function(err, decoded) {      
       if (err) {

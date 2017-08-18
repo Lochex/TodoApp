@@ -7,7 +7,7 @@ var TodoItemSchema   = new Schema({
     title: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
-    owner: {type: Schema.ObjectId, ref: 'TodoItem', required: true}
+    owner: {type: Schema.ObjectId, ref: 'User', required: true}
 
 });
 

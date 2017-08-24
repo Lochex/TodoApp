@@ -1,22 +1,22 @@
-//During the test the env variable is set to test
+// During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
 const data = require('../tests/mockData');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Todo = require('../server/app/models/User');
 
-//Require the dev-dependencies
+// Require the dev-dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server/app');
 const should = chai.should();
 
-const { 
-  mockCreateUser, 
-  invalidUser, 
-  fakeBaasbank, 
+const {
+  mockCreateUser,
+  invalidUser,
+  fakeBaasbank,
   invalidLogin,
-  mockInvalidPassword ,
+  mockInvalidPassword,
   mockInvalidEmail
 } = data;
 
@@ -41,16 +41,15 @@ describe('Users', () => {
   * Test the /POST create user route
   */
   describe('/POST User', () => {
-      it('should CREATE a new user', (done) => {
-        chai.request(server)
-            .post('/api/v1/user')
-            .send(mockCreateUser)
-            .end((err, res) => {
-              res.should.have.status(201);
-              done();
-            });
-      });
-      
+    it('should CREATE a new user', (done) => {
+      chai.request(server)
+          .post('/api/v1/user')
+          .send(mockCreateUser)
+          .end((err, res) => {
+            res.should.have.status(201);
+            done();
+          });
+    });
   });
 
   describe('/POST User', () => {
@@ -60,7 +59,7 @@ describe('Users', () => {
             .send(invalidUser)
             .end((err, res) => {
               res.should.have.status(400);
-              res.body.should.have.property('message').eql('Enter Surname and Firstname');
+              res.body.should.have.property('message').eql('Enter details with the right format');
               done();
             });
       });
@@ -98,7 +97,7 @@ describe('Users', () => {
             .send(mockInvalidPassword)
             .end((err, res) => {
               res.should.have.status(401);
-              res.body.should.have.property('message').eql('Wrong password');
+              res.body.should.have.property('message').eql('Invalid password');
               done();
             });
       });
@@ -109,7 +108,7 @@ describe('Users', () => {
             .send(mockInvalidEmail)
             .end((err, res) => {
               res.should.have.status(401);
-              res.body.should.have.property('message').eql('Wrong email or password');
+              res.body.should.have.property('message').eql('Invalid email address');
               done();
             });
       });

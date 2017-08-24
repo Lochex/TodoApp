@@ -1,6 +1,7 @@
-//const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 const faker = require('faker');
+
 dotenv.config();
 
 module.exports = {
@@ -35,6 +36,4 @@ module.exports = {
     email: 'parios@gmail.com',
     password: 'pari789#'
   }
-
-}
-//module.exports = mockData;
+};

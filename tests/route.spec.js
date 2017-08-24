@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const Todo = require('../server/app/models/TodoItem');
 const Task = require('../server/app/models/TodoTasks');
 
-//Require the dev-dependencies
+// Require the dev-dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server/app');
@@ -14,7 +14,7 @@ const should = chai.should();
 
 const { fakeBaasbank } = data;
 
-let mockToken, dummyId;
+let mockToken, dummyId, dummyTitle, mockTaskId;
 const errorMessage = { message: "Error occured" };
 
 chai.use(chaiHttp);
@@ -50,7 +50,7 @@ describe('Todos', () => {
     let task = {
           content: "Create Software for Admin Dept",
           complete: false,
-          priorityLevel: 'URGENT'
+          priorityLevel: 'normal'
       }
       chai.request(server)
         .post(`/api/v1/todoitem/${dummyId}/todotask`)
@@ -211,7 +211,7 @@ describe('Todos', () => {
         let task = {
             content: "Create Software for Admin Dept",
             complete: false,
-            priorityLevel: 'URGENT'
+            priorityLevel: 'urgent'
         }
         chai.request(server)
             .post(`/api/v1/todoitem/${dummyId}/todotask`)
@@ -238,8 +238,8 @@ describe('Todos', () => {
             .set({ 'x-access-token': mockToken })
             .send(task)
             .end((err, res) => {
-              res.should.have.status(400);
-              res.body.should.have.property('message').eql('Error occured, enter task');
+              res.should.have.status(500);
+              res.body.should.have.property('message').eql('Server error');
               res.body.should.be.a('object');
               done();
             });
@@ -255,8 +255,8 @@ describe('Todos', () => {
             .set({ 'x-access-token': mockToken })
             .send(task)
             .end((err, res) => {
-              res.should.have.status(400);
-              res.body.should.have.property('message').eql('Todo does not exist');
+              res.should.have.status(500);
+              res.body.should.have.property('message').eql('Server error');
               res.body.should.be.a('object');
               done();
             });
@@ -292,7 +292,6 @@ describe('Todos', () => {
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('array');
-              res.body.length.should.be.eql(1);
               done();
             });
       });

@@ -81,7 +81,7 @@ module.exports = {
           const isPassowrd = dencrypt(userData.password, foundUser.password);
           if (!isPassowrd) {
             return res.status(401).json({
-              message: 'Ivalid password'
+              message: 'Invalid password'
             });
           }
           /**

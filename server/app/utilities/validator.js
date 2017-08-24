@@ -43,11 +43,11 @@ const validatePassword = (input) => {
  * error messages if any
  */
 const validatorName = (input) => {
-  if(input) {
+  if (input) {
     const isValid = input
-    .match(/^[a-zA-Z]{2,16} [a-zA-Z]{2,16}$/g);
+    .match(/^[a-zA-Z-]{2,16} [a-zA-Z-]{2,16}$/g);
     if (!isValid) {
-      return false
+      return false;
     }
     return true;
   }

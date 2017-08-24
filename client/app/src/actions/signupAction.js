@@ -7,8 +7,8 @@ const userSignupRequestSuccess = (user) => {
   return {
     type: SAVE_USER,
     user
-  }
-}
+  };
+};
 const userSignupRequest = (formDetails) => {
   return dispatch => {
     return axios.post('/api/v1/user', formDetails)
@@ -16,11 +16,11 @@ const userSignupRequest = (formDetails) => {
       const { user, message } = response.data;
 
       if (response.status === 201){
-         const token = response.data.jwt;
-         localStorage.setItem('jwtToken', token);
-         setAuthorizationToken(token);
-         dispatch(userSignupRequestSuccess(user));
-         toastr.success(message);
+        const token = response.data.jwt;
+        localStorage.setItem('jwtToken', token);
+        setAuthorizationToken(token);
+        dispatch(userSignupRequestSuccess(user));
+        toastr.success(message);
       }
     })
     .catch(function (error) {

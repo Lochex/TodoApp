@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
   const user = state.userReducer.user.name;
   return {
     currentUser: user,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps) (User);
+export default connect(mapStateToProps)(User);

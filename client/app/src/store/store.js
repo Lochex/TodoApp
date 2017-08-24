@@ -10,11 +10,9 @@ const rootReducer = combineReducers({
   userReducer,
   todosReducer,
   taskReducer,
+  todoReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-// const store = createStore(rootReducer, compose(
-//   applyMiddleware(thunk),
-//   window.devToolsExtension ? window.devToolsExtension(): f => f ));
 
 export default store;

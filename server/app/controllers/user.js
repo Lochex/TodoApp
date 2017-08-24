@@ -12,7 +12,7 @@ mongoose.Promise = global.Promise;
 const validateEmail = validator.validateEmail;
 const validatePassword = validator.validatePassword;
 const validatorName = validator.validatorName;
-const errorMessage = { message: "Error occured" };
+const errorMessage = { message: 'Error occured' };
 
 module.exports = {
   createUser(req, res) {
@@ -23,29 +23,27 @@ module.exports = {
       User.findOne({ email: userData.email })
         .then((user) => {
           if (user) {
-            return res.status(400).json({
+            return res.status(406).json({
               message: 'User with email address already exists'
-            })
-          };
+            });
+          }
           const userObject = {
             name: userData.name,
             email: userData.email,
             password: encrypt(userData.password),
-            //provider: userData.provider || 'basic',
-            status: 'active'
-          }
+            // provider: userData.provider || 'basic',
+          };
           return new User(userObject)
             .save()
-            .then(newUser => {
+            .then((newUser) => {
               // create JWt
               const JWTPayload = {
-                id: newUser._id,
+                _id: newUser._id,
                 name: newUser.name,
                 email: newUser.email
-              }
-              const token = jwt.sign(JWTPayload, process.env.SECRET, {
-                expiresIn: 60 * 60 * 24
-              });
+              };
+              const token = jwt.sign(JWTPayload, process.env.SECRET);
+              console.log(token);
 
               // create response payload
               const response = {
@@ -60,7 +58,7 @@ module.exports = {
             });
         })
     } else {
-      res.status(400).send({ message: 'Enter Surname and Firstname' });
+      res.status(400).send({ message: 'Enter details with the right format' });
     }
 
   },
@@ -68,36 +66,43 @@ module.exports = {
     const userData = req.body;
     if (validateEmail(userData.email) && validatePassword(userData.password)) {
       return User.findOne({ email: userData.email })
-        .then(foundUser => {
-          // when user does not exist
+        .then((foundUser) => {
+          /**
+           * when user does not exist
+           */
           if (!foundUser) {
             return res.status(401).json({
-              message: 'Wrong email or password'
+              message: 'Invalid email address'
             });
           }
-          // check user's passwor
+          /**
+           * check user's password
+           */
           const isPassowrd = dencrypt(userData.password, foundUser.password);
           if (!isPassowrd) {
             return res.status(401).json({
-              message: 'Wrong password'
+              message: 'Ivalid password'
             });
           }
-          // create JWt
+          /**
+           * create JWt
+           */
           const JWTPayload = {
             _id: foundUser._id,
             name: foundUser.name,
-            email: foundUser.email,
-            message: 'Login successful'
-          }
+            email: foundUser.email
+          };
           const token = jwt.sign(JWTPayload, process.env.SECRET);
-          // create response payload
+          /**
+           * create response payload
+           */
           const response = {
             user: JWTPayload,
             jwt: token,
             message: 'Login successful'
           };
-          res.status(200).send(response)
-        }).catch(error => {
+          res.status(200).send(response);
+        }).catch((error) => {
           console.log(error)
           res.status(400).send(error);
         });

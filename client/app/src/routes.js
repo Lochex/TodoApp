@@ -9,8 +9,6 @@ import Main from './components/Main';
 import TodoTasks from './components/TodoTasks';
 import Welcome from './components/Welcome';
 import store from './store/store.js';
-import setAuthorizationToken from './utils/setAuthorizationToken.js'
-import { loginRequestSuccess } from './actions/loginAction.js';
 
 export default
   <div>

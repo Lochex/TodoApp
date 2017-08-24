@@ -4,9 +4,10 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import routes from './routes.js';
 import jwtDecode from 'jwt-decode';
-import store from './store/store.js';
-import setAuthorizationToken from './utils/setAuthorizationToken.js'
-import { loginRequestSuccess } from './actions/loginAction.js';
+import store from './store/store';
+import setAuthorizationToken from './utils/setAuthorizationToken';
+import { loginRequestSuccess } from './actions/loginAction';
+import './sass/app.scss';
 // const store = createStore(
 //   (state = {}) => state,
 //   applyMiddleware(thunk)

@@ -1,7 +1,7 @@
 # Todoly Application
-[![Build Status](https://travis-ci.org/Lochex/TodoApp.svg?branch=master)](https://travis-ci.org/Lochex/TodoApp)
+[![Build Status](https://travis-ci.org/Lochex/TodoApp.svg?branch=staging)](https://travis-ci.org/Lochex/TodoApp)
 [![Code Climate](https://codeclimate.com/github/Lochex/TodoApp/badges/gpa.svg)](https://codeclimate.com/github/Lochex/TodoApp) 
-[![Coverage Status](https://coveralls.io/repos/github/Lochex/TodoApp/badge.svg?branch=master)](https://coveralls.io/github/Lochex/TodoApp?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Lochex/TodoApp/badge.svg?branch=staging)](https://coveralls.io/github/Lochex/TodoApp?branch=staging)
 
 ## Introduction
 * Todoly is a simple Todo application that allows users create lists of tasks and also

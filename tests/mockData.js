@@ -35,5 +35,21 @@ module.exports = {
   mockInvalidEmail: {
     email: 'parios@gmail.com',
     password: 'pari789#'
+  },
+
+  mockTask: {
+    content: faker.lorem.text(),
+    complete: false,
+    priorityLevel: 'normal'
+  },
+
+  mockTask2: {
+    content: faker.lorem.text(),
+    complete: false,
+    priorityLevel: 'normal'
+  },
+
+  mockTodo: {
+    title: faker.lorem.text()
   }
 };

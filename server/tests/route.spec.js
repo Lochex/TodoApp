@@ -3,13 +3,13 @@ process.env.NODE_ENV = 'test';
 
 const data = require('./mockData');
 const mongoose = require("mongoose");
-const Todo = require('../server/app/models/TodoItem');
-const Task = require('../server/app/models/TodoTasks');
+const Todo = require('../app/models/TodoItem');
+const Task = require('../app/models/TodoTasks');
 
 // Require the dev-dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../server/app');
+const server = require('../app');
 const should = chai.should();
 
 const { fakeBaasbank, mockTodo, mockTask, mockTask2 } = data;

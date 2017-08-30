@@ -43,7 +43,6 @@ module.exports = {
                 email: newUser.email
               };
               const token = jwt.sign(JWTPayload, process.env.SECRET);
-              console.log(token);
 
               // create response payload
               const response = {

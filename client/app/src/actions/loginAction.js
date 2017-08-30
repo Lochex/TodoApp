@@ -26,6 +26,7 @@ const loginRequest = (formDetails) => {
     .catch(function (error) {
       return error;
     });
-  }
-}
+  };
+};
+
 export { loginRequest, loginRequestSuccess };

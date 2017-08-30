@@ -8,15 +8,15 @@ import { getAllTasks } from '../actions/taskAction.js';
 
 class Sidebar extends Component {
   constructor(props) {
-    super(props); 
+    super(props);
 
     this.state = {
       myTodos: []
-    }
+    };
   }
 
   componentWillMount() {
-    this.props.getTodos();
+    this.props.getAllTodos();
     // this.setState({ myTodos: this.props.allTodos})
   }
 
@@ -31,10 +31,6 @@ class Sidebar extends Component {
   }
 }
 
-Sidebar.propTypes = {
-  getTodos: React.PropTypes.func.isRequired
-};
-
 const mapStateToProps = (state) => {
   return {
     currentUser: state.userReducer.user._id,
@@ -42,11 +38,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getTodos: () => dispatch(getAllTodos()),
-    getTasks: todoId => dispatch(getAllTasks(todoId))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, { getAllTodos, getAllTasks })(Sidebar);

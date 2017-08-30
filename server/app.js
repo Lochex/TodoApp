@@ -18,11 +18,11 @@ const router = express.Router();
 const compiler = webpack(webpackConfig);
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'development';
-const connectedEnv = config[process.env.NODE_ENV] || config['development'];
+const connectedEnv = config[process.env.NODE_ENV] || config.development;
 const staticDir = path.join(__dirname, '../public');
 
 // Configure middleware
-// app.use(logger('dev'));
+app.use(logger('dev'));
 
 
 // Mongoose connect
@@ -51,7 +51,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('listening on port', port);
+  console.log('listening on port', port);
 });
 
 module.exports = app;

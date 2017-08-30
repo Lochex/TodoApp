@@ -17,7 +17,7 @@ const getAllTodos = () => {
     .then((response) => {
       if (response.status === 200) {
         const todos = response.data;
-         dispatch(loadAllTodos(todos));
+        dispatch(loadAllTodos(todos));
       }
     })
     .catch(function (error) {
@@ -31,7 +31,6 @@ const addTodo = (formDetails) => {
     return axios.post('/api/v1/todoitem', formDetails)
     .then((response) => {
       if (response.status === 201) {
-        const todo = response.data;
         dispatch(getAllTodos());
       }
     })
@@ -51,7 +50,6 @@ const getTodo = (todoId) => {
       }
     })
     .catch(function (error) {
-      console.log('See error', error);
       return error;
     });
   };

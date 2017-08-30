@@ -24,8 +24,11 @@ module.exports = {
     }
   },
   getTodoItem(req, res) {
+    console.log(req.params.todo_id, 'request params id ----->');
     return Todo.findById(req.params.todo_id)
-      .then(todo => res.status(200).send(todo))
+      .then((todo) => {
+        res.status(200).send(todo);
+      })
       .catch(() => res.status(400).send(errorMessage));
   },
 

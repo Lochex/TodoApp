@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { LOAD_ALL_TASKS, UPDATE_TASK } from '../constants/actionTypes';
-import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 const loadAllTasks = (tasks) => {
   return {
@@ -28,7 +27,7 @@ const addTask = (formDetails, todoId) => {
   return (dispatch) => {
     return axios.post(`/api/v1/todoitem/${todoId}/todotask`, formDetails)
     .then((response) => {
-      if (response.status === 201){
+      if (response.status === 201) {
         dispatch(getAllTasks(todoId));
       }
     })
@@ -43,7 +42,6 @@ const updateTask = (taskId, task, todoId) => {
     return axios.put(`/api/v1/todotask/${taskId}`, task)
     .then((response) => {
       if (response.status === 200) {
-        const task = response.data;
         dispatch(getAllTasks(todoId));
       }
     })

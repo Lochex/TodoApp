@@ -53,66 +53,63 @@ describe('Users', () => {
   });
 
   describe('/POST User', () => {
-      it('should return an error message when an invalid user detail is entered', (done) => {
-        chai.request(server)
-            .post('/api/v1/user')
-            .send(invalidUser)
-            .end((err, res) => {
-              res.should.have.status(400);
-              res.body.should.have.property('message').eql('Enter details with the right format');
-              done();
-            });
-      });
-      
+    it('should return an error message when an invalid user detail is entered', (done) => {
+      chai.request(server)
+          .post('/api/v1/user')
+          .send(invalidUser)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.have.property('message').eql('Enter details with the right format');
+            done();
+          });
+    });
   });
 
   /*
   * Test the /POST login user route
   */
   describe('/POST User', () => {
-      it('should authenticate the user and login', (done) => {
-        chai.request(server)
-            .post('/api/v1/user/login')
-            .send(fakeBaasbank)
-            .end((err, res) => {
-              res.should.have.status(200);
-              done();
-            });
-      });
+    it('should authenticate the user and login', (done) => {
+      chai.request(server)
+          .post('/api/v1/user/login')
+          .send(fakeBaasbank)
+          .end((err, res) => {
+            res.should.have.status(200);
+            done();
+          });
+    });
 
-      it('should return an error message when an invalid user detail is entered', (done) => {
-        chai.request(server)
-            .post('/api/v1/user/login')
-            .send(invalidLogin)
-            .end((err, res) => {
-              res.should.have.status(400);
-              res.body.should.have.property('message').eql('Invalid Email or password');
-              done();
-            });
-      });
+    it('should return an error message when an invalid user detail is entered', (done) => {
+      chai.request(server)
+          .post('/api/v1/user/login')
+          .send(invalidLogin)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.have.property('message').eql('Invalid Email or password');
+            done();
+          });
+    });
 
-      it('should return an error message', (done) => {
-        chai.request(server)
-            .post('/api/v1/user/login')
-            .send(mockInvalidPassword)
-            .end((err, res) => {
-              res.should.have.status(401);
-              res.body.should.have.property('message').eql('Invalid password');
-              done();
-            });
-      });
+    it('should return an error message', (done) => {
+      chai.request(server)
+          .post('/api/v1/user/login')
+          .send(mockInvalidPassword)
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property('message').eql('Invalid password');
+            done();
+          });
+    });
 
-      it('should return an error message', (done) => {
-        chai.request(server)
-            .post('/api/v1/user/login')
-            .send(mockInvalidEmail)
-            .end((err, res) => {
-              res.should.have.status(401);
-              res.body.should.have.property('message').eql('Invalid email address');
-              done();
-            });
-      });
-      
+    it('should return an error message', (done) => {
+      chai.request(server)
+          .post('/api/v1/user/login')
+          .send(mockInvalidEmail)
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.have.property('message').eql('Invalid email address');
+            done();
+          });
+    });
   });
-
 });

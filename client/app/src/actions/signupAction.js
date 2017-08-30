@@ -15,7 +15,7 @@ const userSignupRequest = (formDetails) => {
     .then((response) => {
       const { user, message } = response.data;
 
-      if (response.status === 201){
+      if (response.status === 201) {
         const token = response.data.jwt;
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
@@ -26,6 +26,7 @@ const userSignupRequest = (formDetails) => {
     .catch(function (error) {
       return error;
     });
-  }
-}
+  };
+};
+
 export { userSignupRequest };

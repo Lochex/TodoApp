@@ -17,5 +17,5 @@ ratings:
   - "**.jsx"
 exclude_paths:
 - node_modules/**/*
-- "client/app/__test__/*"
+- "client/app/__tests__/*"
 - "server/tests/*"

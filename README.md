@@ -57,7 +57,7 @@ and will like to contribute to it, please follow these steps:
 * Fork the app to your repository and then clone to your machine.
 * Create a new branch to add enhancements to.
 * If you want to submit a new feature or enhancement you have made, raise a pull request.
-* Contact me at elchukwu.okonkwo@andela.com for any clarifictions.
+* Contact me at elochukwu.okonkwo@andela.com or elo.okonkwo@gmail.com for any clarifications.
 
 ##Licence
 This project is authored by Elo Okonkwo and is licenced under the MIT licence.

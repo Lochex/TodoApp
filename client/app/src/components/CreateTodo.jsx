@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { addTodo } from '../actions/todoAction';
 // import createtodo action
 
@@ -27,6 +28,7 @@ class CreateTodo extends Component {
       }
     });
     this.setState({ title: '' });
+    browserHistory.push(`/todos/${this.props.todoId}`);
   }
 
   render() {
@@ -40,13 +42,13 @@ class CreateTodo extends Component {
             type="text"
             name="create-todo"
             value={title}
+            placeholder="Create Todo here.."
             required
           />
           <label
             className="mdl-textfield__label"
             htmlFor="create-todo"
           >
-            Create Todo here...
           </label>
         </div>
       </form>
@@ -66,7 +68,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.userReducer.user._id
+    currentUser: state.userReducer.user._id,
+    todoId: state.todoReducer._id
   };
 };
 

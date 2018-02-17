@@ -31,6 +31,7 @@ const addTodo = (formDetails) => {
     return axios.post('/api/v1/todoitem', formDetails)
     .then((response) => {
       if (response.status === 201) {
+        dispatch(getTodo(response.data._id));
         dispatch(getAllTodos());
       }
     })

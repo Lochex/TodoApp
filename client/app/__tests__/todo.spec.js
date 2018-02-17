@@ -54,7 +54,7 @@ describe('Todo Action', () => {
         todo: []
       };
       const store = mockStore(initialState);
-      const expectedAction = [{ type: types.LOAD_ALL_TODOS, todos: { data: response.data } }];
+      const expectedAction = [{ type: types.GET_TODO, todo: { data: response.data } }, { type: types.LOAD_ALL_TODOS, todos: { data: response.data } }];
       store.dispatch(addTodo(todo)).then(() => {
         const actions = store.getActions();
         expect(mockFnOne).toHaveBeenCalled();

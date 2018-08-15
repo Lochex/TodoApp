@@ -1,4 +1,4 @@
 # TodoApp
 
-A simple todo app for small teams
+A simple todo app for small teams updated
 
